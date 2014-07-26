@@ -183,23 +183,23 @@ public:
 
   void update(float delta_t)
   {
-    up->update(delta_t);
-    down->update(delta_t);
-    left->update(delta_t);
-    right->update(delta_t);
+    if (up) up->update(delta_t);
+    if (down) down->update(delta_t);
+    if (left) left->update(delta_t);
+    if (right) right->update(delta_t);
 
     delta.x = delta.y = 0.0f;
     
-    if (left->get_state() == BUTTON_PRESSED)
+    if (left && left->get_state() == BUTTON_PRESSED)
       delta.x += speed * delta_t;
 
-    if (right->get_state() == BUTTON_PRESSED)
+    if (right && right->get_state() == BUTTON_PRESSED)
       delta.x += -speed * delta_t;
 
-    if (up->get_state() == BUTTON_PRESSED)
+    if (up && up->get_state() == BUTTON_PRESSED)
       delta.y += speed * delta_t;
 
-    if (down->get_state() == BUTTON_PRESSED)
+    if (down && down->get_state() == BUTTON_PRESSED)
       delta.y += -speed * delta_t;       
 
     notify_parent();
