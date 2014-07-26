@@ -73,11 +73,13 @@ Inputbox::on_key_pressed(const Input::KeyboardEvent& ev)
   }
   else
   { 
+#ifdef OLD_SDL1
     if (ev.keysym.unicode)
     {
       text += UTF8::encode_utf8(ev.keysym.unicode);
       on_change(text);
     }
+#endif
   }
 }
 

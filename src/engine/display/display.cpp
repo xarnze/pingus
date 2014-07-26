@@ -153,7 +153,8 @@ Display::get_framebuffer()
 Size
 Display::find_closest_fullscreen_video_mode(const Size& size)
 {
-  SDL_Rect** modes = SDL_ListModes(NULL, SDL_FULLSCREEN);
+#ifdef OLD_SDL1
+  SDL_Rect** modes = SDL_ListModes(NULL, SDL_WINDOW_FULLSCREEN);
 
   if (modes == static_cast<SDL_Rect**>(0))
   { // No resolutions at all available, bad
@@ -184,7 +185,9 @@ Display::find_closest_fullscreen_video_mode(const Size& size)
 
     return best_fit;
   }
-
+#else
+  return Size(800, 600);
+#endif
 }
 
 struct SortBySize
@@ -198,6 +201,7 @@ struct SortBySize
 std::vector<Size>
 Display::get_fullscreen_video_modes()
 {
+#ifdef OLD_SDL1
   std::vector<Size> video_modes;  
   SDL_Rect** modes = SDL_ListModes(NULL, SDL_FULLSCREEN);
 
@@ -236,6 +240,9 @@ Display::get_fullscreen_video_modes()
   std::sort(video_modes.begin(), video_modes.end(), SortBySize());
 
   return video_modes;
+#else
+  return std::vector<Size>{{800, 600}};
+#endif
 }
 
 /* EOF */

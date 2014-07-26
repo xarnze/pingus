@@ -98,7 +98,7 @@ struct ScrollEvent
 struct KeyboardEvent
 {
   bool state;
-  SDL_keysym keysym;
+  SDL_Keysym keysym;
 };
 
 struct Event

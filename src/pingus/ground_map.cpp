@@ -201,6 +201,7 @@ void
 GroundMap::put_alpha_surface(Surface provider, Surface sprovider,
                              int x_pos, int y_pos, int real_x_arg, int real_y_arg)
 {
+#ifdef OLD_SDL1
   if (sprovider.get_surface()->format->BitsPerPixel != 8  &&
       sprovider.get_surface()->format->BitsPerPixel != 24 &&
       sprovider.get_surface()->format->BitsPerPixel != 32)
@@ -293,6 +294,7 @@ GroundMap::put_alpha_surface(Surface provider, Surface sprovider,
   
   sprovider.unlock();
   provider.unlock();
+#endif
 }
 
 void

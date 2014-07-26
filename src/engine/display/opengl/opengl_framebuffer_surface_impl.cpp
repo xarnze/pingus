@@ -50,7 +50,9 @@ OpenGLFramebufferSurfaceImpl::OpenGLFramebufferSurfaceImpl(SDL_Surface* src) :
                                               m_texture_size.width, m_texture_size.height, 32,
                                               0x000000ff, 0x0000ff00, 0x00ff0000, 0xff000000);
 #endif
+#ifdef OLD_SDL1
   SDL_SetAlpha(src, 0, 0);
+#endif
   SDL_BlitSurface(src, 0, convert, 0);
   
   GLenum sdl_format;

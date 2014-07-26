@@ -33,6 +33,7 @@ SDLDriver::SDLDriver() :
   string2key(),
   joystick_handles()
 {
+#ifdef OLD_SDL1
   for (int i = 0; i < SDLK_LAST; ++i) 
   {
     char* key_name = SDL_GetKeyName(static_cast<SDLKey>(i));
@@ -41,6 +42,7 @@ SDLDriver::SDLDriver() :
     // FIXME: Make the keynames somewhere user visible so that users can use them
     log_debug("Key: '%1%'", key_name);
   }
+#endif
 }
 
 SDLDriver::~SDLDriver()
@@ -228,13 +230,15 @@ SDLDriver::update(float delta)
         for(std::vector<PointerBinding>::iterator i = pointer_bindings.begin();
             i != pointer_bindings.end(); ++i)
         {
-          i->binding->set_pos(Vector2f(event.motion.x, event.motion.y));
+          i->binding->set_pos(Vector2f(static_cast<float>(event.motion.x), 
+                                       static_cast<float>(event.motion.y)));
         }
 
         for(std::vector<ScrollerBinding>::iterator i = scroller_bindings.begin();
             i != scroller_bindings.end(); ++i)
         {
-          i->binding->set_delta(Vector2f(event.motion.xrel, event.motion.yrel));
+          i->binding->set_delta(Vector2f(static_cast<float>(event.motion.xrel),
+                                         static_cast<float>(event.motion.yrel)));
         }
         break;
 
@@ -253,8 +257,16 @@ SDLDriver::update(float delta)
         }
         break;
 
-      case SDL_VIDEORESIZE:
-        Display::resize(Size(event.resize.w, event.resize.h));
+      case SDL_WINDOWEVENT:
+        switch(event.window.event)
+        {
+          case SDL_WINDOWEVENT_RESIZED:
+            Display::resize(Size(event.window.data1, event.window.data2));
+            break;
+            
+          default:
+            break;
+        }
         break;
 
       case SDL_KEYDOWN:          

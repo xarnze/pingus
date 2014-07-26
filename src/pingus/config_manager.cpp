@@ -185,7 +185,7 @@ ConfigManager::set_mouse_grab(bool v)
 
   if (v != get_mouse_grab())
   {
-    SDL_WM_GrabInput(v ? SDL_GRAB_ON : SDL_GRAB_OFF);
+    SDL_SetWindowGrab(SDL_GL_GetCurrentWindow(), static_cast<SDL_bool>(v));
     on_mouse_grab_change(v);
   }
 
@@ -195,7 +195,7 @@ ConfigManager::set_mouse_grab(bool v)
 bool
 ConfigManager::get_mouse_grab() const
 {
-  return (SDL_WM_GrabInput(SDL_GRAB_QUERY) == SDL_GRAB_ON);
+  return SDL_GetWindowGrab(SDL_GL_GetCurrentWindow());
 }
 
 void

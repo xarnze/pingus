@@ -139,6 +139,7 @@ Playfield::update(float delta)
     }
   }
 
+#ifdef OLD_SDL1
   if (globals::auto_scrolling && (Display::is_fullscreen() || SDL_WM_GrabInput(SDL_GRAB_QUERY) == SDL_GRAB_ON))
   {
     scroll_speed = static_cast<int>(800 * delta);
@@ -161,6 +162,7 @@ Playfield::update(float delta)
       state.set_pos(state.get_pos() + Vector2i(0, scroll_speed));        
     }
   }
+#endif
 }
 
 void
@@ -214,6 +216,7 @@ Playfield::on_pointer_move (int x, int y)
 
   if (globals::developer_mode)
   { // Some fun stuff that lets you draw directly on the level
+#ifdef OLD_SDL1
     Uint8 *keystate = SDL_GetKeyState(NULL);
     if (keystate[SDLK_DELETE])
     {
@@ -241,6 +244,7 @@ Playfield::on_pointer_move (int x, int y)
                                p.y - mask.get_height()/2,
                                Groundtype::GP_BRIDGE);
     }
+#endif
   }
 }
 

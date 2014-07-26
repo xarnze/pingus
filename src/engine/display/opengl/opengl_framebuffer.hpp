@@ -22,11 +22,12 @@
 class OpenGLFramebuffer : public Framebuffer
 {
 private:
-  SDL_Surface* screen;
+  SDL_Window* m_window;
   std::vector<Rect> cliprect_stack;
 
 public:
   OpenGLFramebuffer();
+  ~OpenGLFramebuffer();
 
   FramebufferSurface create_surface(const Surface& surface);
 

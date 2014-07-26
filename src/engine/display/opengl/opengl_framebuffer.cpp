@@ -16,15 +16,21 @@
 
 #include "engine/display/opengl/opengl_framebuffer.hpp"
 
+#include <SDL.h>
 #include <sstream>
 #include <stdexcept>
 
 #include "engine/display/opengl/opengl_framebuffer_surface_impl.hpp"
 
 OpenGLFramebuffer::OpenGLFramebuffer() :
-  screen(),
+  m_window(),
   cliprect_stack()  
 {
+}
+
+OpenGLFramebuffer::~OpenGLFramebuffer()
+{
+  SDL_DestroyWindow(m_window);
 }
 
 FramebufferSurface
@@ -36,25 +42,25 @@ OpenGLFramebuffer::create_surface(const Surface& surface)
 void
 OpenGLFramebuffer::set_video_mode(const Size& size, bool fullscreen, bool resizable)
 {
-  int flags = SDL_OPENGL;
+  int flags = SDL_WINDOW_OPENGL;
   
   if (fullscreen)
   {
-    flags |= SDL_FULLSCREEN;
+    flags |= SDL_WINDOW_FULLSCREEN;
   }
   else if (resizable)
   {
-    flags |= SDL_RESIZABLE;
+    flags |= SDL_WINDOW_RESIZABLE;
   }
 
-  int bpp = 0; // auto-detect 
-  screen = SDL_SetVideoMode(size.width, size.height, bpp, flags);
-
-  if(screen == 0) 
+  m_window = SDL_CreateWindow("Pingus",
+                              SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
+                              size.width, size.height,
+                              flags);
+  if(m_window == 0)
   {
     std::ostringstream msg;
-    msg << "Couldn't set video mode (" << size.width << "x" << size.height
-        << "-" << bpp << "bpp): " << SDL_GetError();
+    msg << "Couldn't set video mode (" << size.width << "x" << size.height << "): " << SDL_GetError();
     throw std::runtime_error(msg.str());
   }
 
@@ -82,19 +88,19 @@ OpenGLFramebuffer::set_video_mode(const Size& size, bool fullscreen, bool resiza
 bool
 OpenGLFramebuffer::is_fullscreen() const
 {
-  return screen->flags & SDL_FULLSCREEN;
+  return SDL_GetWindowFlags(m_window) & SDL_WINDOW_FULLSCREEN;
 }
 
 bool
 OpenGLFramebuffer::is_resizable() const
 {
-  return screen->flags & SDL_RESIZABLE;
+  return SDL_GetWindowFlags(m_window) & SDL_WINDOW_RESIZABLE;
 }
 
 void
 OpenGLFramebuffer::flip()
 {
-  SDL_GL_SwapBuffers();
+  SDL_GL_SwapWindow(m_window);
 }
   
 void
@@ -116,7 +122,7 @@ OpenGLFramebuffer::push_cliprect(const Rect& rect)
   }
 
   glScissor(cliprect_stack.back().left,
-            screen->h - cliprect_stack.back().bottom, 
+            get_size().height - cliprect_stack.back().bottom, 
             cliprect_stack.back().get_width(), 
             cliprect_stack.back().get_height());
 }
@@ -247,7 +253,9 @@ OpenGLFramebuffer::fill_rect(const Rect& rect, const Color& color)
 Size
 OpenGLFramebuffer::get_size() const
 {
-  return Size(screen->w, screen->h);
+  Size s;
+  SDL_GetWindowSize(m_window, &s.width, &s.height);
+  return s;
 }
 
 /* EOF */

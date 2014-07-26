@@ -112,7 +112,7 @@ Viewport::on_secondary_button_click(int x_, int y_)
 void 
 Viewport::on_primary_button_press(int x_, int y_)
 {
-  Uint8* keystate = SDL_GetKeyState(NULL);
+  const Uint8* keystate = SDL_GetKeyboardState(nullptr);
 
   mouse_world_pos  = screen2world(x_, y_);
   mouse_screen_pos = Vector2i(x_, y_);

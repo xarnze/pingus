@@ -34,10 +34,13 @@ std::string
 Screenshot::make_screenshot()
 {
   std::string filename = get_filename();
+
   log_info("Screenshot: Saving screenshot to: %1%", filename);
+#ifdef OLD_SDL1
   save(SDL_GetVideoSurface(), filename);
+#endif
   log_info("Screenshot: Screenshot is done.");
-  
+
   return filename;
 }
 
@@ -47,7 +50,7 @@ Screenshot::save(SDL_Surface* surface, const std::string& filename)
   std::unique_ptr<uint8_t[]> buffer(new uint8_t[surface->w * surface->h * 3]);
 
 #ifdef HAVE_OPENGL
-  if(surface->flags & SDL_OPENGL)
+  if(surface->flags & SDL_WINDOW_OPENGL)
   {
     glPixelStorei(GL_PACK_ALIGNMENT, 1);
     glReadPixels(0, 0, surface->w, surface->h, GL_RGB, GL_UNSIGNED_BYTE, buffer.get());

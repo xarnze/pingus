@@ -55,7 +55,7 @@ private:
   struct KeyboardButtonBinding {
     Button* binding;
 
-    SDLKey key;
+    SDL_Keycode key;
   };
 
   struct ScrollerBinding {
@@ -74,7 +74,7 @@ private:
   std::vector<JoystickAxisBinding>   joystick_axis_bindings;
   Keyboard* keyboard_binding;
 
-  typedef std::map<std::string, SDLKey> String2Key;
+  typedef std::map<std::string, SDL_Keycode> String2Key;
   String2Key string2key;
 
   typedef std::map<int, SDL_Joystick*> JoystickHandles;

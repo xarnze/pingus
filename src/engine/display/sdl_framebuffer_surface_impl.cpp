@@ -19,10 +19,12 @@
 SDLFramebufferSurfaceImpl::SDLFramebufferSurfaceImpl(SDL_Surface* src) :
   surface()
 {
+#ifdef OLD_SDL1
   if (src->format->Amask != 0 || (src->flags & SDL_SRCCOLORKEY))
     surface = SDL_DisplayFormatAlpha(src);
   else
     surface = SDL_DisplayFormat(src);
+#endif
 }
 
 SDLFramebufferSurfaceImpl::~SDLFramebufferSurfaceImpl()
