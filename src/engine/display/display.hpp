@@ -46,6 +46,7 @@ public:
 
   static bool is_fullscreen();
   static bool is_resizable();
+  static bool has_grab();
   
   static Framebuffer* get_framebuffer();
 
