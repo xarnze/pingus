@@ -62,6 +62,8 @@ public:
 
   void on_key_pressed(const Input::KeyboardEvent& ev);
 
+  void on_text_input(const Input::TextInputEvent& ev);
+
   void on_pointer_enter();
   void on_pointer_leave();
 

@@ -188,6 +188,17 @@ GroupComponent::on_key_pressed(const Input::KeyboardEvent& ev)
 }
 
 void
+GroupComponent::on_text_input(const Input::TextInputEvent& ev)
+{
+  if (grabbed_comp)
+    grabbed_comp->on_text_input(ev);
+  else if (focused_comp)
+    focused_comp->on_text_input(ev);
+  else if (mouse_over_comp)
+    mouse_over_comp->on_text_input(ev); 
+}
+
+void
 GroupComponent::on_pointer_move(int x, int y)
 {
   Vector2i mouse_pos = drawing_context.screen_to_world(Vector2i(x, y));

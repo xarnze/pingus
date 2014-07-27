@@ -87,6 +87,8 @@ public:
       components should implement this */
   virtual void on_key_pressed(const Input::KeyboardEvent& ev) {}
 
+  virtual void on_text_input(const Input::TextInputEvent& ev) {}
+
   GroupComponent* get_parent() const;
   void set_parent(GroupComponent* p);
 
