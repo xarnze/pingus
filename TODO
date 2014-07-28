@@ -36,6 +36,18 @@ Stuff to do at all times:
 - grep for all the FIXME's and '#if 0' and find those that might be
   important, add what you find to this TODO
 
+Roadmap for 0.8.0
+=================
+
+* finish/test SDL2 port
+
+  - OpenGL renderer is broken
+  - Delta renderer is broken
+  - some sound effects are broken
+  - fade-in/out is glitchy
+  - fullscreen doesn't work
+
+
 Roadmap for 0.7.5
 =================
 
