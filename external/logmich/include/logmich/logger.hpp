@@ -85,9 +85,16 @@ public:
   template<typename ...Args>
   void append_format(LogLevel level, const std::string& file, int line, const std::string& fmt, Args&&... args)
   {
-    boost::format format(fmt);
-    detail::unpack_fmt(format, args...);
-    append(level, file, line, format.str());
+    try
+    {
+      boost::format format(fmt);
+      detail::unpack_fmt(format, args...);
+      append(level, file, line, format.str());
+    }
+    catch(const std::exception& err)
+    {
+      std::cerr << "[LOG ERROR] " << file << ":" << line << ": " << err.what() << ": \"" << fmt << "\"" << std::endl;
+    }
   }
 };
 
