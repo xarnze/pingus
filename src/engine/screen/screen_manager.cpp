@@ -378,6 +378,7 @@ ScreenManager::fade_over(ScreenPtr old_screen, ScreenPtr new_screen)
     display_gc->clear();
       
     progress = static_cast<float>(SDL_GetTicks() - last_ticks)/1000.0f * 2.0f;
+    SDL_Delay(1000);
   }
 
   input_manager.refresh();
