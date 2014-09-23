@@ -87,6 +87,12 @@ GUIScreen::update (const Input::Event& event)
     }
     break;
 
+    case Input::TEXT_INPUT_EVENT_TYPE:
+    {
+                
+    }
+    break;
+
     default:
       log_error("unhandled event type: %1%", event.type);
       break;

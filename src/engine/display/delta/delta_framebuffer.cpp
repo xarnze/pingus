@@ -41,6 +41,12 @@ DeltaFramebuffer::create_surface(const Surface& surface)
   return framebuffer->create_surface(surface);
 }
 
+Surface
+DeltaFramebuffer::make_screenshot() const
+{
+  return framebuffer->make_screenshot();
+}
+
 void
 DeltaFramebuffer::set_video_mode(const Size& size, bool fullscreen, bool resizable)
 {

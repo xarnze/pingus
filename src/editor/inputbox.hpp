@@ -37,6 +37,7 @@ public:
   void set_text(const std::string& text);
   std::string get_text() const { return text; }
   void on_key_pressed(const Input::KeyboardEvent& ev);
+  void on_text_input(const Input::TextInputEvent& ev);
 
   void update_layout() {}
 

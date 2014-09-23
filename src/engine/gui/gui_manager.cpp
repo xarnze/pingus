@@ -78,6 +78,10 @@ GUIManager::update(const Input::Event& event)
       // AxisEvents can be ignored in the GUI, they are handled elsewhere
       log_debug("GUIManager: AxisEvent: %1%", event.axis.dir);
       break;
+
+    case Input::TEXT_INPUT_EVENT_TYPE:
+      on_text_input(event.text);
+      break;
         
     case Input::KEYBOARD_EVENT_TYPE:
       if (event.keyboard.state)

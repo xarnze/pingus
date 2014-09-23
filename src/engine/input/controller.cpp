@@ -258,6 +258,12 @@ Controller::add_keyboard_event(const SDL_KeyboardEvent& ev)
 }
 
 void
+Controller::add_text_input_event(const SDL_TextInputEvent& ev)
+{
+  events.push_back(makeTextInputEvent(ev));
+}
+
+void
 Controller::clear_events()
 {
   events.clear();

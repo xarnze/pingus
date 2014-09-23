@@ -36,9 +36,12 @@ public:
 
   virtual FramebufferSurface create_surface(const Surface& surface) =0;
 
+  virtual Surface make_screenshot() const =0;
+
   virtual void set_video_mode(const Size& size, bool fullscreen, bool resizable) =0;
   virtual bool is_fullscreen() const =0;
   virtual bool is_resizable() const =0;
+  virtual bool has_grab() const { return false; }
   virtual void flip() =0;
 
   virtual void push_cliprect(const Rect&) =0;
